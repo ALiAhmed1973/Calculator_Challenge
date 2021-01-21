@@ -3,6 +3,8 @@ package com.projects.thirdwayvcalculatorchallenge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +15,7 @@ import com.projects.thirdwayvcalculatorchallenge.databinding.ActivityMainBinding
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private MainCalculatorViewModel viewModel;
+    private HistoryAdapter historyAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        historyAdapter = new HistoryAdapter(this);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,3,RecyclerView.VERTICAL,false);
+        binding.historyRecyclerview.setLayoutManager(gridLayoutManager);
+        binding.historyRecyclerview.setAdapter(historyAdapter);
         viewModel= new ViewModelProvider(this).get(MainCalculatorViewModel.class);
 
         binding.addButton.setOnClickListener(v -> {

@@ -1,6 +1,7 @@
 package com.projects.thirdwayvcalculatorchallenge;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,11 +10,14 @@ import com.projects.thirdwayvcalculatorchallenge.databinding.ActivityMainBinding
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
+    private MainCalculatorViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding =ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        viewModel= new ViewModelProvider(this).get(MainCalculatorViewModel.class);
     }
 }

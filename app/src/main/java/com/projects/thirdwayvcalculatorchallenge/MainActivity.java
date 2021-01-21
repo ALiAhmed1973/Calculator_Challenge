@@ -12,6 +12,10 @@ import android.view.View;
 
 import com.projects.thirdwayvcalculatorchallenge.databinding.ActivityMainBinding;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private MainCalculatorViewModel viewModel;
@@ -52,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel.resultMutableLiveData.observe(this, result -> {
             binding.resultTextView.setText(result.toString());
+        });
+
+        viewModel.historyListMutableLiveData.observe(this,historylist->{
+            historyAdapter.setList(historylist);
         });
     }
 }

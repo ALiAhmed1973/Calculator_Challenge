@@ -18,6 +18,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     public void setList(List<String> list) {
         this.list = list;
+        notifyDataSetChanged();
     }
 
     private List<String> list;
@@ -76,7 +77,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     @Override
 
     public int getItemCount() {
-        if(list.isEmpty())
+        if(list==null)
         {
             return 0;
         }

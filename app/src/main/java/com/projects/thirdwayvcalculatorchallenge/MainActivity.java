@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements HistoryAdapter.On
     private ActivityMainBinding binding;
     private MainCalculatorViewModel viewModel;
     private HistoryAdapter historyAdapter;
+    private CalculatorOperation calculatorOperation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,24 +28,28 @@ public class MainActivity extends AppCompatActivity implements HistoryAdapter.On
         View view = binding.getRoot();
         setContentView(view);
 
+        viewModel= new ViewModelProvider(this).get(MainCalculatorViewModel.class);
+        binding.setViewModel(viewModel);
+       binding.setCalculatorOperation(calculatorOperation);
+        binding.setLifecycleOwner(this);
         historyAdapter = new HistoryAdapter(this,this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,3,RecyclerView.VERTICAL,false);
         binding.historyRecyclerview.setLayoutManager(gridLayoutManager);
         binding.historyRecyclerview.setAdapter(historyAdapter);
-        viewModel= new ViewModelProvider(this).get(MainCalculatorViewModel.class);
 
-        binding.addButton.setOnClickListener(v -> {
-            viewModel.setCurrentOperation(CalculatorOperation.Add);
-        });
-        binding.minusButton.setOnClickListener(v -> {
-            viewModel.setCurrentOperation(CalculatorOperation.Minus);
-        });
-        binding.multiplyButton.setOnClickListener(v -> {
-            viewModel.setCurrentOperation(CalculatorOperation.Multiply);
-        });
-        binding.dividingButton.setOnClickListener(v -> {
-            viewModel.setCurrentOperation(CalculatorOperation.Division);
-        });
+
+//        binding.addButton.setOnClickListener(v -> {
+//            viewModel.setCurrentOperation(CalculatorOperation.Add);
+//        });
+//        binding.minusButton.setOnClickListener(v -> {
+//            viewModel.setCurrentOperation(CalculatorOperation.Minus);
+//        });
+//        binding.multiplyButton.setOnClickListener(v -> {
+//            viewModel.setCurrentOperation(CalculatorOperation.Multiply);
+//        });
+//        binding.dividingButton.setOnClickListener(v -> {
+//            viewModel.setCurrentOperation(CalculatorOperation.Division);
+//        });
 
         binding.equalButton.setOnClickListener(v->{
             if(!TextUtils.isEmpty(binding.editTextNumber.getText().toString()))
@@ -62,9 +67,9 @@ public class MainActivity extends AppCompatActivity implements HistoryAdapter.On
             viewModel.redo();
         });
 
-        viewModel.resultMutableLiveData.observe(this, result -> {
-            binding.resultTextView.setText(result.toString());
-        });
+//        viewModel.resultMutableLiveData.observe(this, result -> {
+//            binding.resultTextView.setText(result.toString());
+//        });
 
         viewModel.historyListMutableLiveData.observe(this,historylist->{
             historyAdapter.setList(historylist);

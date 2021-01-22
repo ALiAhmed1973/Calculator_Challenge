@@ -82,7 +82,7 @@ public class MainCalculatorViewModel extends ViewModel {
         calculatorOperationChecks();
     }
     public void removeHistoryList(OperatorNumber deletedOperatorNumber) {
-        historyList.remove(operatorNumber);
+        historyList.remove(deletedOperatorNumber);
         historyListMutableLiveData.setValue(historyList);
         equal();
         addingToDeque();

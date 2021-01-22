@@ -79,6 +79,19 @@ public class MainActivity extends AppCompatActivity implements HistoryAdapter.On
             binding.redoButton.setEnabled(isActive);
         });
 
+        viewModel.isAddButtonActive.observe(this,isActive->{
+            binding.addButton.setEnabled(isActive);
+        });
+        viewModel.isMinusButtonActive.observe(this,isActive->{
+            binding.minusButton.setEnabled(isActive);
+        });
+        viewModel.isMultiplyButtonActive.observe(this,isActive->{
+            binding.multiplyButton.setEnabled(isActive);
+        });
+        viewModel.isDivisionButtonActive.observe(this,isActive->{
+            binding.dividingButton.setEnabled(isActive);
+        });
+
     }
 
     @Override

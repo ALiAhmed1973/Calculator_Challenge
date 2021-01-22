@@ -14,15 +14,24 @@ public class MainCalculatorViewModel extends ViewModel {
     private OperatorNumber operatorNumber;
     public MutableLiveData<List<OperatorNumber>> historyListMutableLiveData = new MutableLiveData<>();
     private List<OperatorNumber> historyList = new ArrayList<>();
-    public MutableLiveData<Boolean> isEqualButtonActive = new MutableLiveData<>();
+    public MutableLiveData<Boolean> isEqualButtonActive = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> isUndoButtonActive = new MutableLiveData<>();
     public MutableLiveData<Boolean> isRedoButtonActive = new MutableLiveData<>();
+    public MutableLiveData<Boolean> isAddButtonActive = new MutableLiveData<>(true);
+    public MutableLiveData<Boolean> isMinusButtonActive = new MutableLiveData<>(true);
+    public MutableLiveData<Boolean> isMultiplyButtonActive = new MutableLiveData<>(true);
+    public MutableLiveData<Boolean> isDivisionButtonActive = new MutableLiveData<>(true);
+    private List<MutableLiveData<Boolean>> allCalculatorOperation= new ArrayList<>();
     private Deque<List<OperatorNumber>> allHistoryOperation= new ArrayDeque<>();
     private Deque<List<OperatorNumber>> undoOp = new ArrayDeque<>();
     private Deque<List<OperatorNumber>> redoOp= new ArrayDeque<>();
     public MainCalculatorViewModel() {
         resultMutableLiveData.setValue(0f);
         operatorNumber = new OperatorNumber();
+        allCalculatorOperation.add(isAddButtonActive);
+        allCalculatorOperation.add(isMinusButtonActive);
+        allCalculatorOperation.add(isMultiplyButtonActive);
+        allCalculatorOperation.add(isDivisionButtonActive);
     }
 
     public void setIsEqualButtonActive(Boolean active) {
@@ -43,6 +52,7 @@ public class MainCalculatorViewModel extends ViewModel {
         historyListMutableLiveData.setValue(historyList);
         equal();
         addingToDeque();
+        calculatorOperationChecks();
     }
     public void removeHistoryList(OperatorNumber deletedOperatorNumber) {
         historyList.remove(operatorNumber);
@@ -54,7 +64,10 @@ public class MainCalculatorViewModel extends ViewModel {
     public void setCurrentOperation(CalculatorOperation currentOperation) {
         operatorNumber = new OperatorNumber();
         operatorNumber.setNumOperator(currentOperation);
-        isEqualButtonActive.setValue(true);
+        if(isEqualButtonActive.getValue()==false) {
+            calculatorOperationChecks();
+            isEqualButtonActive.setValue(true);
+        }
     }
     public void setCurrentInputNum(Float currentInputNum) {
         operatorNumber.setNumValue(currentInputNum);
@@ -144,4 +157,31 @@ public class MainCalculatorViewModel extends ViewModel {
         }
     }
 
+    private void calculatorOperationChecks()
+    {
+        setAllCalculatorOperationListFalse();
+        switch (operatorNumber.getNumOperator()) {
+            case Add:
+                isAddButtonActive.setValue(true);
+                break;
+            case Minus:
+                isMinusButtonActive.setValue(true);
+                break;
+            case Multiply:
+                isMultiplyButtonActive.setValue(true);
+                break;
+            case Division:
+                isDivisionButtonActive.setValue(true);
+                break;
+        }
+    }
+
+    private void setAllCalculatorOperationListFalse()
+    {
+        for (MutableLiveData<Boolean> item:allCalculatorOperation)
+        {
+
+            item.setValue(!item.getValue());
+        }
+    }
 }

@@ -76,6 +76,6 @@ public class MainActivity extends AppCompatActivity implements HistoryAdapter.On
 
     @Override
     public void onItemClick(OperatorNumber operatorNumber) {
-
+        viewModel.removeHistoryList(operatorNumber);
     }
 }

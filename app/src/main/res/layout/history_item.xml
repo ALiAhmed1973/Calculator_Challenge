@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/cellScreen"
-    android:layout_margin="8dp">
+    android:layout_margin="2dp">
 
     <TextView
         android:id="@+id/operation_textView"
@@ -16,7 +16,7 @@
         android:autoSizeMinTextSize="14sp"
         android:autoSizeMaxTextSize="24sp"
         android:autoSizeStepGranularity="2sp"
-        android:padding="4dp"
+        android:padding="2dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

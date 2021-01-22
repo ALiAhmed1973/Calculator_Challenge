@@ -1,4 +1,4 @@
-package com.projects.thirdwayvcalculatorchallenge;
+package com.projects.thirdwayvcalculatorchallenge.ui;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.projects.thirdwayvcalculatorchallenge.data.CalculatorOperation;
+import com.projects.thirdwayvcalculatorchallenge.data.OperatorNumber;
 import com.projects.thirdwayvcalculatorchallenge.databinding.ActivityMainBinding;
 
 /**

@@ -1,4 +1,4 @@
-package com.projects.thirdwayvcalculatorchallenge;
+package com.projects.thirdwayvcalculatorchallenge.data;
 
 /**
  * Enum for holding Calculator operators process to track Operation

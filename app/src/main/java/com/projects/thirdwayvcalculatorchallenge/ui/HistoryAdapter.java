@@ -1,4 +1,4 @@
-package com.projects.thirdwayvcalculatorchallenge;
+package com.projects.thirdwayvcalculatorchallenge.ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.projects.thirdwayvcalculatorchallenge.R;
+import com.projects.thirdwayvcalculatorchallenge.data.OperatorNumber;
 
 import java.util.List;
 
@@ -27,6 +30,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    /**
+     * List of operations to show as cells
+     */
     private List<OperatorNumber> list;
 
     private OnItemClickListener onItemClickListener;
@@ -88,11 +94,18 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     }
 
+    /**
+     * Interface to get which item selected
+     */
     public interface OnItemClickListener {
-
         void onItemClick(OperatorNumber operatorNumber);
-
     }
+
+    /**
+     * For adding operation type to operation value
+     * @param operatorNumber one operation object has two variables
+     * @return one string of operation type added to operation value
+     */
     private static String ConcatText(OperatorNumber operatorNumber)
     {
         String s ="";

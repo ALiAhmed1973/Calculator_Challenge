@@ -7,17 +7,17 @@
 
         <variable
             name="viewModel"
-            type="com.projects.thirdwayvcalculatorchallenge.MainCalculatorViewModel" />
+            type="com.projects.thirdwayvcalculatorchallenge.ui.MainCalculatorViewModel" />
         <variable
             name="calculatorOperation"
-            type="com.projects.thirdwayvcalculatorchallenge.CalculatorOperation" />
+            type="com.projects.thirdwayvcalculatorchallenge.data.CalculatorOperation" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
+        tools:context=".ui.MainActivity"
         android:background="@color/backgroundColor">
 
         <TextView

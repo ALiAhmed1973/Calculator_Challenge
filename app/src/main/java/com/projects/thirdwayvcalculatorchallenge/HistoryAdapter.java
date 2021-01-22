@@ -10,12 +10,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * Recycler View that hold List of OperatorNumber for converting List to cells
+ */
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
     private static final String TAG = HistoryAdapter.class.getSimpleName();
 
-    private Context context;
-
+    /**
+     * For set List of OperatorNumber that would changed when getHistoryListMutableLiveData change
+     * and notify recyclerview that data changed
+     * @param list list of OperatorNumber
+     */
     public void setList(List<OperatorNumber> list) {
         this.list = list;
         notifyDataSetChanged();
@@ -25,12 +31,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     private OnItemClickListener onItemClickListener;
 
-    public HistoryAdapter(Context context,OnItemClickListener onItemClickListener) {
-
-        this.context = context;
-
+    public HistoryAdapter(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
-
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

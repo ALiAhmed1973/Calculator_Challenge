@@ -10,17 +10,44 @@ import java.util.List;
 
 public class MainCalculatorViewModel extends ViewModel {
     private static final String TAG = "MainCalculatorViewModel";
-    public MutableLiveData<Float> resultMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<Float> resultMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<Float> getResultMutableLiveData() {
+        return resultMutableLiveData;
+    }
     private OperatorNumber operatorNumber;
-    public MutableLiveData<List<OperatorNumber>> historyListMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<OperatorNumber>> historyListMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<OperatorNumber>> getHistoryListMutableLiveData() {
+        return historyListMutableLiveData;
+    }
     private List<OperatorNumber> historyList = new ArrayList<>();
-    public MutableLiveData<Boolean> isEqualButtonActive = new MutableLiveData<>(false);
-    public MutableLiveData<Boolean> isUndoButtonActive = new MutableLiveData<>();
-    public MutableLiveData<Boolean> isRedoButtonActive = new MutableLiveData<>();
-    public MutableLiveData<Boolean> isAddButtonActive = new MutableLiveData<>(true);
-    public MutableLiveData<Boolean> isMinusButtonActive = new MutableLiveData<>(true);
-    public MutableLiveData<Boolean> isMultiplyButtonActive = new MutableLiveData<>(true);
-    public MutableLiveData<Boolean> isDivisionButtonActive = new MutableLiveData<>(true);
+    private MutableLiveData<Boolean> isEqualButtonActive = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> getIsEqualButtonActive() {
+        return isEqualButtonActive;
+    }
+    private MutableLiveData<Boolean> isUndoButtonActive = new MutableLiveData<>();
+    public MutableLiveData<Boolean> getIsUndoButtonActive() {
+        return isUndoButtonActive;
+    }
+    private MutableLiveData<Boolean> isRedoButtonActive = new MutableLiveData<>();
+    public MutableLiveData<Boolean> getIsRedoButtonActive() {
+        return isRedoButtonActive;
+    }
+    private MutableLiveData<Boolean> isAddButtonActive = new MutableLiveData<>(true);
+    public MutableLiveData<Boolean> getIsAddButtonActive() {
+        return isAddButtonActive;
+    }
+    private MutableLiveData<Boolean> isMinusButtonActive = new MutableLiveData<>(true);
+    public MutableLiveData<Boolean> getIsMinusButtonActive() {
+        return isMinusButtonActive;
+    }
+    private MutableLiveData<Boolean> isMultiplyButtonActive = new MutableLiveData<>(true);
+    public MutableLiveData<Boolean> getIsMultiplyButtonActive() {
+        return isMultiplyButtonActive;
+    }
+    private MutableLiveData<Boolean> isDivisionButtonActive = new MutableLiveData<>(true);
+    public MutableLiveData<Boolean> getIsDivisionButtonActive() {
+        return isDivisionButtonActive;
+    }
     private List<MutableLiveData<Boolean>> allCalculatorOperation= new ArrayList<>();
     private Deque<List<OperatorNumber>> allHistoryOperation= new ArrayDeque<>();
     private Deque<List<OperatorNumber>> undoOp = new ArrayDeque<>();

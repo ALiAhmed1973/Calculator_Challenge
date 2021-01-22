@@ -49,39 +49,31 @@ public class MainActivity extends AppCompatActivity implements HistoryAdapter.On
                 binding.editTextNumber.setText("");
             }
         });
-//        binding.undoButton.setOnClickListener(v->{
-//            viewModel.undo();
-//        });
-//        binding.redoButton.setOnClickListener(v->{
-//            viewModel.redo();
-//        });
 
-
-
-        viewModel.historyListMutableLiveData.observe(this,historylist->{
+        viewModel.getHistoryListMutableLiveData().observe(this,historylist->{
             historyAdapter.setList(historylist);
         });
-        viewModel.isEqualButtonActive.observe(this,isActive->{
+        viewModel.getIsEqualButtonActive().observe(this,isActive->{
             binding.equalButton.setEnabled(isActive);
         });
 
-        viewModel.isUndoButtonActive.observe(this,isActive->{
+        viewModel.getIsUndoButtonActive().observe(this,isActive->{
             binding.undoButton.setEnabled(isActive);
         });
-        viewModel.isRedoButtonActive.observe(this,isActive->{
+        viewModel.getIsRedoButtonActive().observe(this,isActive->{
             binding.redoButton.setEnabled(isActive);
         });
 
-        viewModel.isAddButtonActive.observe(this,isActive->{
+        viewModel.getIsAddButtonActive().observe(this,isActive->{
             binding.addButton.setEnabled(isActive);
         });
-        viewModel.isMinusButtonActive.observe(this,isActive->{
+        viewModel.getIsMinusButtonActive().observe(this,isActive->{
             binding.minusButton.setEnabled(isActive);
         });
-        viewModel.isMultiplyButtonActive.observe(this,isActive->{
+        viewModel.getIsMultiplyButtonActive().observe(this,isActive->{
             binding.multiplyButton.setEnabled(isActive);
         });
-        viewModel.isDivisionButtonActive.observe(this,isActive->{
+        viewModel.getIsDivisionButtonActive().observe(this,isActive->{
             binding.dividingButton.setEnabled(isActive);
         });
 

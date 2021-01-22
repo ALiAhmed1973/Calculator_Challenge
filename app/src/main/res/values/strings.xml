@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Thirdwayv Calculator Challenge</string>
+    <string name="undo_name">Undo</string>
+    <string name="redo_name">Redo</string>
+    <string name="add_sign">+</string>
+    <string name="minus_sign">-</string>
+    <string name="multiply_sign">*</string>
+    <string name="division_sign">/</string>
+    <string name="equal_sign">=</string>
 </resources>

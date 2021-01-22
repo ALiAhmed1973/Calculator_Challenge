@@ -16,7 +16,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HistoryAdapter.OnItemClickListener {
     private ActivityMainBinding binding;
     private MainCalculatorViewModel viewModel;
     private HistoryAdapter historyAdapter;
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        historyAdapter = new HistoryAdapter(this);
+        historyAdapter = new HistoryAdapter(this,this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,3,RecyclerView.VERTICAL,false);
         binding.historyRecyclerview.setLayoutManager(gridLayoutManager);
         binding.historyRecyclerview.setAdapter(historyAdapter);
@@ -49,8 +49,9 @@ public class MainActivity extends AppCompatActivity {
         binding.equalButton.setOnClickListener(v->{
             if(!TextUtils.isEmpty(binding.editTextNumber.getText().toString()))
             {
-                viewModel.inputNum= Float.parseFloat(binding.editTextNumber.getText().toString());
-                viewModel.equal();
+                viewModel.setCurrentInputNum(Float.parseFloat(binding.editTextNumber.getText().toString()));
+                viewModel.setIsEqualButtonActive(false);
+                viewModel.Calculation();
             }
         });
 
@@ -61,5 +62,20 @@ public class MainActivity extends AppCompatActivity {
         viewModel.historyListMutableLiveData.observe(this,historylist->{
             historyAdapter.setList(historylist);
         });
+        viewModel.isEqualButtonActive.observe(this,isActive->{
+            binding.equalButton.setEnabled(isActive);
+        });
+
+        binding.undoButton.setOnClickListener(v->{
+            viewModel.undo();
+        });
+        binding.redoButton.setOnClickListener(v->{
+            viewModel.redo();
+        });
+    }
+
+    @Override
+    public void onItemClick(OperatorNumber operatorNumber) {
+
     }
 }

@@ -16,20 +16,20 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     private Context context;
 
-    public void setList(List<String> list) {
+    public void setList(List<OperatorNumber> list) {
         this.list = list;
         notifyDataSetChanged();
     }
 
-    private List<String> list;
+    private List<OperatorNumber> list;
 
     private OnItemClickListener onItemClickListener;
 
-    public HistoryAdapter(Context context) {
+    public HistoryAdapter(Context context,OnItemClickListener onItemClickListener) {
 
         this.context = context;
 
-        //this.onItemClickListener = onItemClickListener;
+        this.onItemClickListener = onItemClickListener;
 
     }
 
@@ -40,9 +40,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             operationTextView = itemView.findViewById(R.id.operation_textView);
         }
 
-        public void bind(final String model, final OnItemClickListener listener) {
-            operationTextView.setText(model);
-            itemView.setOnClickListener(v -> listener.onItemClick(getLayoutPosition()));
+        public void bind(final OperatorNumber model, final OnItemClickListener listener) {
+            String s = ConcatText(model);
+            operationTextView.setText(s);
+            itemView.setOnClickListener(v -> listener.onItemClick(model));
 
         }
 
@@ -68,7 +69,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        String item = list.get(position);
+        OperatorNumber item = list.get(position);
 
         holder.bind(item, onItemClickListener);
 
@@ -87,8 +88,26 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     public interface OnItemClickListener {
 
-        void onItemClick(int position);
+        void onItemClick(OperatorNumber operatorNumber);
 
     }
-
+    private static String ConcatText(OperatorNumber operatorNumber)
+    {
+        String s ="";
+        switch (operatorNumber.getNumOperator()) {
+            case Add:
+              s= "+".concat(String.valueOf(operatorNumber.getNumValue()));
+                break;
+            case Minus:
+                s= "-".concat(String.valueOf(operatorNumber.getNumValue()));
+                break;
+            case Multiply:
+                s= "*".concat(String.valueOf(operatorNumber.getNumValue()));
+                break;
+            case Division:
+                s= "/".concat(String.valueOf(operatorNumber.getNumValue()));
+                break;
+        }
+        return s;
+    }
 }

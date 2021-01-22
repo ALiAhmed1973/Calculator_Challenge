@@ -38,18 +38,7 @@ public class MainActivity extends AppCompatActivity implements HistoryAdapter.On
         binding.historyRecyclerview.setAdapter(historyAdapter);
 
 
-//        binding.addButton.setOnClickListener(v -> {
-//            viewModel.setCurrentOperation(CalculatorOperation.Add);
-//        });
-//        binding.minusButton.setOnClickListener(v -> {
-//            viewModel.setCurrentOperation(CalculatorOperation.Minus);
-//        });
-//        binding.multiplyButton.setOnClickListener(v -> {
-//            viewModel.setCurrentOperation(CalculatorOperation.Multiply);
-//        });
-//        binding.dividingButton.setOnClickListener(v -> {
-//            viewModel.setCurrentOperation(CalculatorOperation.Division);
-//        });
+
 
         binding.equalButton.setOnClickListener(v->{
             if(!TextUtils.isEmpty(binding.editTextNumber.getText().toString()))
@@ -60,16 +49,14 @@ public class MainActivity extends AppCompatActivity implements HistoryAdapter.On
                 binding.editTextNumber.setText("");
             }
         });
-        binding.undoButton.setOnClickListener(v->{
-            viewModel.undo();
-        });
-        binding.redoButton.setOnClickListener(v->{
-            viewModel.redo();
-        });
-
-//        viewModel.resultMutableLiveData.observe(this, result -> {
-//            binding.resultTextView.setText(result.toString());
+//        binding.undoButton.setOnClickListener(v->{
+//            viewModel.undo();
 //        });
+//        binding.redoButton.setOnClickListener(v->{
+//            viewModel.redo();
+//        });
+
+
 
         viewModel.historyListMutableLiveData.observe(this,historylist->{
             historyAdapter.setList(historylist);

@@ -54,6 +54,12 @@ public class MainActivity extends AppCompatActivity implements HistoryAdapter.On
                 viewModel.Calculation();
             }
         });
+        binding.undoButton.setOnClickListener(v->{
+            viewModel.undo();
+        });
+        binding.redoButton.setOnClickListener(v->{
+            viewModel.redo();
+        });
 
         viewModel.resultMutableLiveData.observe(this, result -> {
             binding.resultTextView.setText(result.toString());
@@ -66,12 +72,13 @@ public class MainActivity extends AppCompatActivity implements HistoryAdapter.On
             binding.equalButton.setEnabled(isActive);
         });
 
-        binding.undoButton.setOnClickListener(v->{
-            viewModel.undo();
+        viewModel.isUndoButtonActive.observe(this,isActive->{
+            binding.undoButton.setEnabled(isActive);
         });
-        binding.redoButton.setOnClickListener(v->{
-            viewModel.redo();
+        viewModel.isRedoButtonActive.observe(this,isActive->{
+            binding.redoButton.setEnabled(isActive);
         });
+
     }
 
     @Override

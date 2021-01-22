@@ -39,6 +39,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="8dp"
         android:text="Undo"
+        android:enabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editTextNumber" />
 
@@ -48,6 +49,7 @@
         android:layout_height="80dp"
         android:layout_marginEnd="8dp"
         android:text="Redo"
+        android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editTextNumber" />
 

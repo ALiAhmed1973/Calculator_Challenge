@@ -1,9 +1,5 @@
 package com.projects.thirdwayvcalculatorchallenge;
 
-import android.util.Log;
-import android.widget.Switch;
-
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -20,7 +16,8 @@ public class MainCalculatorViewModel extends ViewModel {
     private List<OperatorNumber> historyList = new ArrayList<>();
     public MutableLiveData<Boolean> isEqualButtonActive = new MutableLiveData<>();
     private Deque<List<OperatorNumber>> allHistoryOperation= new ArrayDeque<>();
-    private Deque<List<OperatorNumber>> UndoOp= new ArrayDeque<>();
+    private Deque<List<OperatorNumber>> undoOp = new ArrayDeque<>();
+    private Deque<List<OperatorNumber>> redoOp= new ArrayDeque<>();
     public MainCalculatorViewModel() {
         resultMutableLiveData.setValue(0f);
         operatorNumber = new OperatorNumber();
@@ -36,7 +33,8 @@ public class MainCalculatorViewModel extends ViewModel {
     private void addingToDeque() {
         List<OperatorNumber> operatorNumbers = new ArrayList<>(historyList);
         allHistoryOperation.add(operatorNumbers);
-       // UndoOp.add(operatorNumbers);
+
+        undoOp=new ArrayDeque<>(allHistoryOperation);
     }
     public void Calculation() {
         historyList.add(operatorNumber);
@@ -62,23 +60,29 @@ public class MainCalculatorViewModel extends ViewModel {
 
     public void redo()
     {
-        List<OperatorNumber> operatorNumbers = allHistoryOperation.getFirst();
-        allHistoryOperation.addLast(operatorNumbers);
-        historyList=new ArrayList<>(operatorNumbers);
-        historyListMutableLiveData.setValue(historyList);
-        equal();
 
+        if(!redoOp.isEmpty()) {
+            List<OperatorNumber> operatorNumbers = redoOp.pollLast();
+            undoOp.add(operatorNumbers);
+            allHistoryOperation.add(operatorNumbers);
+            List<OperatorNumber> lastListOperatorNumbers = allHistoryOperation.getLast();
+            historyList = new ArrayList<>(lastListOperatorNumbers);
+            historyListMutableLiveData.setValue(historyList);
+            equal();
+        }
     }
     public void undo()
     {
-        List<OperatorNumber> operatorNumbers = allHistoryOperation.pollLast();
-        allHistoryOperation.addFirst(operatorNumbers);
-        List<OperatorNumber> lastListOperatorNumbers = allHistoryOperation.getLast();
-        historyList=new ArrayList<>(lastListOperatorNumbers);
-        historyListMutableLiveData.setValue(historyList);
-        equal();
 
-
+        if(undoOp.size()>1) {
+            List<OperatorNumber> operatorNumbers = undoOp.pollLast();
+            redoOp.add(operatorNumbers);
+            allHistoryOperation.add(undoOp.getLast());
+            List<OperatorNumber> lastListOperatorNumbers = allHistoryOperation.getLast();
+            historyList = new ArrayList<>(lastListOperatorNumbers);
+            historyListMutableLiveData.setValue(historyList);
+            equal();
+        }
     }
 
     private void equal() {
@@ -103,8 +107,5 @@ public class MainCalculatorViewModel extends ViewModel {
         resultMutableLiveData.setValue(result);
     }
 
-//    public void addingHistory()
-//    {
-//        addingHistoryList(operatorNumber);
-//    }
+
 }

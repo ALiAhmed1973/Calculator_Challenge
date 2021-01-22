@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements HistoryAdapter.On
                 viewModel.setCurrentInputNum(Float.parseFloat(binding.editTextNumber.getText().toString()));
                 viewModel.setIsEqualButtonActive(false);
                 viewModel.Calculation();
+                binding.editTextNumber.setText("");
             }
         });
         binding.undoButton.setOnClickListener(v->{

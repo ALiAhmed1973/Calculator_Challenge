@@ -10,6 +10,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * viewModel for MainActivity
@@ -200,6 +201,7 @@ public class MainCalculatorViewModel extends ViewModel {
         List<OperatorNumber> operatorNumbers = new ArrayList<>(historyList);
         allHistoryOperation.add(operatorNumbers);
         undoListsOperations =new ArrayDeque<>(allHistoryOperation);
+        redoListsOperations.clear();
         UndoRedoButtonsChecks();
     }
 
@@ -283,7 +285,7 @@ public class MainCalculatorViewModel extends ViewModel {
      */
     private void equal() {
         float result=0;
-        for (OperatorNumber operatorNumber1:historyList) {
+        for (OperatorNumber operatorNumber1: Objects.requireNonNull(historyListMutableLiveData.getValue())) {
             switch (operatorNumber1.getNumOperator()) {
                 case Add:
                     result= result+operatorNumber1.getNumValue();

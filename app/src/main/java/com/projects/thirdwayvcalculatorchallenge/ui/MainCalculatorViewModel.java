@@ -3,6 +3,7 @@ package com.projects.thirdwayvcalculatorchallenge.ui;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.projects.thirdwayvcalculatorchallenge.UndoRedo;
 import com.projects.thirdwayvcalculatorchallenge.data.CalculatorOperation;
 import com.projects.thirdwayvcalculatorchallenge.data.OperatorNumber;
 
@@ -22,14 +23,7 @@ public class MainCalculatorViewModel extends ViewModel {
      */
     private MutableLiveData<Float> resultMutableLiveData = new MutableLiveData<>();
     /**
-     * For encapsulate resultMutableLiveData
-     * @return resultMutableLiveData
-     */
-    public MutableLiveData<Float> getResultMutableLiveData() {
-        return resultMutableLiveData;
-    }
-    /**
-     *  operatorNumber object to hold current operation
+     * operatorNumber object to hold current operation
      */
     private OperatorNumber operatorNumber;
     /**
@@ -37,14 +31,6 @@ public class MainCalculatorViewModel extends ViewModel {
      * to create recyclerview list
      */
     private MutableLiveData<List<OperatorNumber>> historyListMutableLiveData = new MutableLiveData<>();
-    /**
-     * For encapsulate historyListMutableLiveData
-     * @return historyListMutableLiveData
-     */
-    public MutableLiveData<List<OperatorNumber>> getHistoryListMutableLiveData() {
-        return historyListMutableLiveData;
-    }
-
     /**
      * list of operation for tracking operations and to added to historyListMutableLiveData
      */
@@ -54,86 +40,29 @@ public class MainCalculatorViewModel extends ViewModel {
      */
     private MutableLiveData<Boolean> isEqualButtonActive = new MutableLiveData<>(false);
     /**
-     * For encapsulate isEqualButtonActive
-     * @return isEqualButtonActive
-     */
-    public MutableLiveData<Boolean> getIsEqualButtonActive() {
-        return isEqualButtonActive;
-    }
-    /**
-     * For encapsulate isEqualButtonActive
-     * @param active so set isEqualButtonActive
-     */
-    public void setIsEqualButtonActive(Boolean active) {
-        this.isEqualButtonActive.setValue(active);
-    }
-    /**
      * For checking UndoButton active state and observe any change to update undo button
      */
     private MutableLiveData<Boolean> isUndoButtonActive = new MutableLiveData<>();
-    /**
-     * For encapsulate isUndoButtonActive
-     * @return isUndoButtonActive
-     */
-    public MutableLiveData<Boolean> getIsUndoButtonActive() {
-        return isUndoButtonActive;
-    }
     /**
      * For checking RedoButton active state and observe any change to update redo button
      */
     private MutableLiveData<Boolean> isRedoButtonActive = new MutableLiveData<>();
     /**
-     * For encapsulate isRedoButtonActive
-     * @return isRedoButtonActive
-     */
-    public MutableLiveData<Boolean> getIsRedoButtonActive() {
-        return isRedoButtonActive;
-    }
-    /**
      * For checking AddButton active state and observe any change to update Add button
      */
     private MutableLiveData<Boolean> isAddButtonActive = new MutableLiveData<>(true);
-    /**
-     * For encapsulate isAddButtonActive
-     * @return isAddButtonActive
-     */
-    public MutableLiveData<Boolean> getIsAddButtonActive() {
-        return isAddButtonActive;
-    }
     /**
      * For checking MinusButton active state and observe any change to update minus button
      */
     private MutableLiveData<Boolean> isMinusButtonActive = new MutableLiveData<>(true);
     /**
-     * For encapsulate isMinusButtonActive
-     * @return isMinusButtonActive
-     */
-    public MutableLiveData<Boolean> getIsMinusButtonActive() {
-        return isMinusButtonActive;
-    }
-    /**
      * For checking MultiplyButton active state and observe any change to update multiply button
      */
     private MutableLiveData<Boolean> isMultiplyButtonActive = new MutableLiveData<>(true);
     /**
-     * For encapsulate isMultiplyButtonActive
-     * @return isMultiplyButtonActive
-     */
-    public MutableLiveData<Boolean> getIsMultiplyButtonActive() {
-        return isMultiplyButtonActive;
-    }
-    /**
      * For checking DivisionButton active state and observe any change to update division button
      */
     private MutableLiveData<Boolean> isDivisionButtonActive = new MutableLiveData<>(true);
-    /**
-     * For encapsulate isDivisionButtonActive
-     * @return isDivisionButtonActive
-     */
-    public MutableLiveData<Boolean> getIsDivisionButtonActive() {
-        return isDivisionButtonActive;
-    }
-
     /**
      * list of MutableLiveData to store operation Buttons active state to perform for loop method to all of them
      */
@@ -142,20 +71,13 @@ public class MainCalculatorViewModel extends ViewModel {
      * ArrayDeque of list of OperatorNumber to store everything that happen from start to end even undo and redo result
      * every list of turn stored
      */
-    private Deque<List<OperatorNumber>> allHistoryOperation= new ArrayDeque<>();
+    private Deque<List<OperatorNumber>> allHistoryOperation = new ArrayDeque<>();
     /**
      * ArrayDeque of list of OperatorNumber to store like allHistoryOperation but this can changed to remove and add to it
      * to perform undo method
      */
-    private Deque<List<OperatorNumber>> undoListsOperations = new ArrayDeque<>();
-    /**
-     * ArrayDeque of list of OperatorNumber to store what removed from undoOp but this can changed to remove and add to it
-     * to perform redo method
-     */
-    private Deque<List<OperatorNumber>> redoListsOperations = new ArrayDeque<>();
-    /**
-     * viewModel Constructor to instantiate variables for once
-     */
+    private UndoRedo undoRedo = new UndoRedo();
+
     public MainCalculatorViewModel() {
         resultMutableLiveData.setValue(0f);
         operatorNumber = new OperatorNumber();
@@ -163,6 +85,96 @@ public class MainCalculatorViewModel extends ViewModel {
         operationButtonsState.add(isMinusButtonActive);
         operationButtonsState.add(isMultiplyButtonActive);
         operationButtonsState.add(isDivisionButtonActive);
+    }
+
+    /**
+     * For encapsulate resultMutableLiveData
+     *
+     * @return resultMutableLiveData
+     */
+    public MutableLiveData<Float> getResultMutableLiveData() {
+        return resultMutableLiveData;
+    }
+
+    /**
+     * For encapsulate historyListMutableLiveData
+     *
+     * @return historyListMutableLiveData
+     */
+    public MutableLiveData<List<OperatorNumber>> getHistoryListMutableLiveData() {
+        return historyListMutableLiveData;
+    }
+
+    /**
+     * For encapsulate isEqualButtonActive
+     *
+     * @return isEqualButtonActive
+     */
+    public MutableLiveData<Boolean> getIsEqualButtonActive() {
+        return isEqualButtonActive;
+    }
+
+    /**
+     * For encapsulate isEqualButtonActive
+     *
+     * @param active so set isEqualButtonActive
+     */
+    public void setIsEqualButtonActive(Boolean active) {
+        this.isEqualButtonActive.setValue(active);
+    }
+
+    /**
+     * For encapsulate isUndoButtonActive
+     *
+     * @return isUndoButtonActive
+     */
+    public MutableLiveData<Boolean> getIsUndoButtonActive() {
+        return isUndoButtonActive;
+    }
+
+    /**
+     * For encapsulate isRedoButtonActive
+     *
+     * @return isRedoButtonActive
+     */
+    public MutableLiveData<Boolean> getIsRedoButtonActive() {
+        return isRedoButtonActive;
+    }
+
+    /**
+     * For encapsulate isAddButtonActive
+     *
+     * @return isAddButtonActive
+     */
+    public MutableLiveData<Boolean> getIsAddButtonActive() {
+        return isAddButtonActive;
+    }
+
+    /**
+     * For encapsulate isMinusButtonActive
+     *
+     * @return isMinusButtonActive
+     */
+    public MutableLiveData<Boolean> getIsMinusButtonActive() {
+        return isMinusButtonActive;
+    }
+
+    /**
+     * For encapsulate isMultiplyButtonActive
+     *
+     * @return isMultiplyButtonActive
+     */
+    public MutableLiveData<Boolean> getIsMultiplyButtonActive() {
+        return isMultiplyButtonActive;
+    }
+
+    /**
+     * For encapsulate isDivisionButtonActive
+     *
+     * @return isDivisionButtonActive
+     */
+    public MutableLiveData<Boolean> getIsDivisionButtonActive() {
+        return isDivisionButtonActive;
     }
 
     /**
@@ -185,6 +197,7 @@ public class MainCalculatorViewModel extends ViewModel {
      * Removing on operation from recyclerview adapter when user choice item to delete
      * and update recyclerview adapter by historyListMutableLiveData and equal the result list again
      * updating addingToDeque to add every list happened to allHistoryOperation and undoListsOperations too
+     *
      * @param deletedOperatorNumber item that clicked
      */
     public void removeHistoryList(OperatorNumber deletedOperatorNumber) {
@@ -200,20 +213,20 @@ public class MainCalculatorViewModel extends ViewModel {
     private void addingToDeque() {
         List<OperatorNumber> operatorNumbers = new ArrayList<>(historyList);
         allHistoryOperation.add(operatorNumbers);
-        undoListsOperations =new ArrayDeque<>(allHistoryOperation);
-        redoListsOperations.clear();
+        undoRedo.updateUndoList(allHistoryOperation);
         UndoRedoButtonsChecks();
     }
 
     /**
      * To set current CurrentOperation when user clicked sign button
      * and check operation button active state to active one and disabled others
+     *
      * @param currentOperation current CurrentOperation to store it in operatorNumber
      */
     public void setCurrentOperation(CalculatorOperation currentOperation) {
         operatorNumber = new OperatorNumber();
         operatorNumber.setNumOperator(currentOperation);
-        if(isEqualButtonActive.getValue()==false) {
+        if (isEqualButtonActive.getValue() == false) {
             calculatorOperationChecks();
             isEqualButtonActive.setValue(true);
         }
@@ -221,6 +234,7 @@ public class MainCalculatorViewModel extends ViewModel {
 
     /**
      * to set current value of input number performed by user
+     *
      * @param currentInputNum current operation value to store it in operatorNumber
      */
     public void setCurrentInputNum(Float currentInputNum) {
@@ -234,30 +248,16 @@ public class MainCalculatorViewModel extends ViewModel {
      * and equal last list that passed to adapter.
      * check undo button active state to active when it has operation to perform and disable when empty
      */
-    public void undo()
-    {
-        List<OperatorNumber> operatorNumbers = undoListsOperations.pollLast();
-        redoListsOperations.add(operatorNumbers);
-        if(!undoListsOperations.isEmpty())
-        {
-            allHistoryOperation.add(undoListsOperations.getLast());
-            List<OperatorNumber> lastListOperatorNumbers = allHistoryOperation.getLast();
-            historyList = new ArrayList<>(lastListOperatorNumbers);
-            historyListMutableLiveData.setValue(historyList);
-            equal();
-            isRedoButtonActive.setValue(true);
-        }else
-        {
-            List<OperatorNumber> newOp = new ArrayList<>(0);
-            allHistoryOperation.add(newOp);
-            List<OperatorNumber> lastListOperatorNumbers = allHistoryOperation.getLast();
-            historyList = new ArrayList<>(lastListOperatorNumbers);
-            historyListMutableLiveData.setValue(historyList);
-            equal();
-            isRedoButtonActive.setValue(true);
-        }
+    public void undo() {
+        List<OperatorNumber> getLastListInUndo = undoRedo.getLastListUndo();
+        allHistoryOperation.add(getLastListInUndo);
+        List<OperatorNumber> lastListOperatorNumbers = allHistoryOperation.getLast();
+        historyList = new ArrayList<>(lastListOperatorNumbers);
+        historyListMutableLiveData.setValue(historyList);
+        equal();
         UndoRedoButtonsChecks();
     }
+
     /**
      * redo method to move forward on step after undo to perform that it delete last list of redo list and added
      * to undo list and update allHistoryOperation that track every operation,
@@ -266,17 +266,11 @@ public class MainCalculatorViewModel extends ViewModel {
      * check redo button active state to active when it has operation to perform and disable when empty
      */
     public void redo() {
-
-        if (!redoListsOperations.isEmpty()) {
-            List<OperatorNumber> operatorNumbers = redoListsOperations.pollLast();
-            undoListsOperations.add(operatorNumbers);
-            allHistoryOperation.add(operatorNumbers);
-            List<OperatorNumber> lastListOperatorNumbers = allHistoryOperation.getLast();
-            historyList = new ArrayList<>(lastListOperatorNumbers);
-            historyListMutableLiveData.setValue(historyList);
-            equal();
-            isUndoButtonActive.setValue(true);
-        }
+        allHistoryOperation.add(undoRedo.getLastListRedo());
+        List<OperatorNumber> lastListOperatorNumbers = allHistoryOperation.getLast();
+        historyList = new ArrayList<>(lastListOperatorNumbers);
+        historyListMutableLiveData.setValue(historyList);
+        equal();
         UndoRedoButtonsChecks();
     }
 
@@ -284,20 +278,20 @@ public class MainCalculatorViewModel extends ViewModel {
      * equal every operation in historyList and update final result
      */
     private void equal() {
-        float result=0;
-        for (OperatorNumber operatorNumber1: Objects.requireNonNull(historyListMutableLiveData.getValue())) {
+        float result = 0;
+        for (OperatorNumber operatorNumber1 : Objects.requireNonNull(historyListMutableLiveData.getValue())) {
             switch (operatorNumber1.getNumOperator()) {
                 case Add:
-                    result= result+operatorNumber1.getNumValue();
+                    result = result + operatorNumber1.getNumValue();
                     break;
                 case Minus:
-                    result= result-operatorNumber1.getNumValue();
+                    result = result - operatorNumber1.getNumValue();
                     break;
                 case Multiply:
-                    result= result*operatorNumber1.getNumValue();
+                    result = result * operatorNumber1.getNumValue();
                     break;
                 case Division:
-                    result= result/operatorNumber1.getNumValue();
+                    result = result / operatorNumber1.getNumValue();
                     break;
             }
         }
@@ -305,31 +299,18 @@ public class MainCalculatorViewModel extends ViewModel {
     }
 
     /**
-     *To Check undo redo buttons active state
+     * To Check undo redo buttons active state
      */
-    private void UndoRedoButtonsChecks()
-    {
-        if(undoListsOperations.isEmpty())
-        {
-            isUndoButtonActive.setValue(false);
-        }else
-        {
-            isUndoButtonActive.setValue(true);
-        }
-
-        if(redoListsOperations.isEmpty())
-        {
-            isRedoButtonActive.setValue(false);
-        }else
-        {
-            isRedoButtonActive.setValue(true);
-        }
+    private void UndoRedoButtonsChecks() {
+        undoRedo.undoRedoButtonsChecks();
+        isUndoButtonActive.setValue(undoRedo.getIsUndoButtonActive());
+        isRedoButtonActive.setValue(undoRedo.getIsRedoButtonActive());
     }
+
     /**
-     *To Check operations buttons active state
+     * To Check operations buttons active state
      */
-    private void calculatorOperationChecks()
-    {
+    private void calculatorOperationChecks() {
         setAllCalculatorOperationListFalse();
         switch (operatorNumber.getNumOperator()) {
             case Add:
@@ -348,12 +329,10 @@ public class MainCalculatorViewModel extends ViewModel {
     }
 
     /**
-     *To active all or disable all operations buttons
+     * To active all or disable all operations buttons
      */
-    private void setAllCalculatorOperationListFalse()
-    {
-        for (MutableLiveData<Boolean> item: operationButtonsState)
-        {
+    private void setAllCalculatorOperationListFalse() {
+        for (MutableLiveData<Boolean> item : operationButtonsState) {
 
             item.setValue(!item.getValue());
         }

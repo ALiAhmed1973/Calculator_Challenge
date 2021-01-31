@@ -11,6 +11,12 @@ public class OperatorNumber {
     private CalculatorOperation NumOperator;
     private Float NumValue;
 
+    public OperatorNumber(){}
+    public OperatorNumber(CalculatorOperation numOperator, Float numValue) {
+        NumOperator = numOperator;
+        NumValue = numValue;
+    }
+
     public CalculatorOperation getNumOperator() {
         return NumOperator;
     }

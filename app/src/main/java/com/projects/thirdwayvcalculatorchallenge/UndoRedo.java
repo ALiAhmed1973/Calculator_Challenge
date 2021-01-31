@@ -1,6 +1,8 @@
 package com.projects.thirdwayvcalculatorchallenge;
 
 
+import androidx.annotation.VisibleForTesting;
+
 import com.projects.thirdwayvcalculatorchallenge.data.OperatorNumber;
 
 import java.util.ArrayDeque;
@@ -9,12 +11,28 @@ import java.util.Deque;
 import java.util.List;
 
 public class UndoRedo {
+
     private Deque<List<OperatorNumber>> undoListsOperations = new ArrayDeque<>();
+    public Deque<List<OperatorNumber>> getUndoListsOperations() {
+        return undoListsOperations;
+    }
+
+
     /**
      * ArrayDeque of list of OperatorNumber to store what removed from undoOp but this can changed to remove and add to it
      * to perform redo method
      */
-    public Deque<List<OperatorNumber>> redoListsOperations = new ArrayDeque<>();
+    private Deque<List<OperatorNumber>> redoListsOperations = new ArrayDeque<>();
+
+
+    public void UpdateRedoList(Deque<List<OperatorNumber>> redoListsOperations) {
+        this.redoListsOperations = new ArrayDeque<>(redoListsOperations);
+    }
+
+
+    public Deque<List<OperatorNumber>> getRedoListsOperations() {
+        return redoListsOperations;
+    }
 
     private Boolean isUndoButtonActive ;
 

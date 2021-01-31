@@ -17,20 +17,25 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class UndoRedoTest {
     UndoRedo undoRedo;
     Deque<List<OperatorNumber>> allHistoryOperation;
-
+    List<OperatorNumber> operatorNumberList1;
+    List<OperatorNumber> operatorNumberList2;
     @Before
     public void setUp()
     {
         undoRedo= new UndoRedo();
         allHistoryOperation= new ArrayDeque<>();
+
+        operatorNumberList1= Arrays.asList(new OperatorNumber(CalculatorOperation.Add,5f),
+                new OperatorNumber(CalculatorOperation.Multiply,6f));
+
+        operatorNumberList2= Arrays.asList(new OperatorNumber(CalculatorOperation.Add,7f),
+                new OperatorNumber(CalculatorOperation.Division,8f));
     }
 
     @Test
     public void updateUndoList()
     {
-        List<OperatorNumber> operatorNumberList= Arrays.asList(new OperatorNumber(CalculatorOperation.Add,5f),
-                new OperatorNumber(CalculatorOperation.Add,6f));
-        allHistoryOperation.add(operatorNumberList);
+        allHistoryOperation.add(operatorNumberList1);
         undoRedo.updateUndoList(allHistoryOperation);
         assertThat(undoRedo.getUndoListsOperations().size(), Matchers.equalTo(1));
         assertThat(undoRedo.getUndoListsOperations().getFirst(), Matchers.equalTo(allHistoryOperation.getFirst()));
@@ -39,9 +44,7 @@ public class UndoRedoTest {
     @Test
     public void undoOperationAddToRedoListEmptyUndoList()
     {
-        List<OperatorNumber> operatorNumberList= Arrays.asList(new OperatorNumber(CalculatorOperation.Add,5f),
-                new OperatorNumber(CalculatorOperation.Add,6f));
-        allHistoryOperation.add(operatorNumberList);
+        allHistoryOperation.add(operatorNumberList1);
         undoRedo.updateUndoList(allHistoryOperation);
         undoRedo.getLastListUndo();
         assertThat(undoRedo.getUndoListsOperations().size(), Matchers.equalTo(0));
@@ -52,10 +55,6 @@ public class UndoRedoTest {
     @Test
     public void undoOperationAddToRedoListNotEmptyUndoList()
     {
-        List<OperatorNumber> operatorNumberList1= Arrays.asList(new OperatorNumber(CalculatorOperation.Add,5f),
-                new OperatorNumber(CalculatorOperation.Add,6f));
-        List<OperatorNumber> operatorNumberList2= Arrays.asList(new OperatorNumber(CalculatorOperation.Add,5f),
-                new OperatorNumber(CalculatorOperation.Add,6f));
         allHistoryOperation.add(operatorNumberList1);
         allHistoryOperation.add(operatorNumberList2);
         undoRedo.updateUndoList(allHistoryOperation);
@@ -73,9 +72,7 @@ public class UndoRedoTest {
     @Test
     public void redoOperationAddToUndoListEmptyRedoList()
     {
-        List<OperatorNumber> operatorNumberList= Arrays.asList(new OperatorNumber(CalculatorOperation.Add,5f),
-                new OperatorNumber(CalculatorOperation.Add,6f));
-        allHistoryOperation.add(operatorNumberList);
+        allHistoryOperation.add(operatorNumberList1);
         undoRedo.UpdateRedoList(allHistoryOperation);
         undoRedo.getLastListRedo();
         assertThat(undoRedo.getRedoListsOperations().size(), Matchers.equalTo(0));
@@ -85,10 +82,6 @@ public class UndoRedoTest {
     @Test
     public void redoOperationAddToUndoListNotEmptyRedoList()
     {
-        List<OperatorNumber> operatorNumberList1= Arrays.asList(new OperatorNumber(CalculatorOperation.Add,5f),
-                new OperatorNumber(CalculatorOperation.Add,6f));
-        List<OperatorNumber> operatorNumberList2= Arrays.asList(new OperatorNumber(CalculatorOperation.Add,5f),
-                new OperatorNumber(CalculatorOperation.Add,6f));
         allHistoryOperation.add(operatorNumberList1);
         allHistoryOperation.add(operatorNumberList2);
         undoRedo.UpdateRedoList(allHistoryOperation);
@@ -117,9 +110,7 @@ public class UndoRedoTest {
     @Test
     public void checkUndoNotEmptyAndActive()
     {
-        List<OperatorNumber> operatorNumberList= Arrays.asList(new OperatorNumber(CalculatorOperation.Add,5f),
-                new OperatorNumber(CalculatorOperation.Add,6f));
-        allHistoryOperation.add(operatorNumberList);
+        allHistoryOperation.add(operatorNumberList1);
         undoRedo.updateUndoList(allHistoryOperation);
         undoRedo.undoRedoButtonsChecks();
         assertThat(undoRedo.getIsUndoButtonActive(), Matchers.equalTo(true));
@@ -127,9 +118,7 @@ public class UndoRedoTest {
     @Test
     public void checkRedoNotEmptyAndActive()
     {
-        List<OperatorNumber> operatorNumberList= Arrays.asList(new OperatorNumber(CalculatorOperation.Add,5f),
-                new OperatorNumber(CalculatorOperation.Add,6f));
-        allHistoryOperation.add(operatorNumberList);
+        allHistoryOperation.add(operatorNumberList1);
         undoRedo.UpdateRedoList(allHistoryOperation);
         undoRedo.undoRedoButtonsChecks();
         assertThat(undoRedo.getIsRedoButtonActive(), Matchers.equalTo(true));

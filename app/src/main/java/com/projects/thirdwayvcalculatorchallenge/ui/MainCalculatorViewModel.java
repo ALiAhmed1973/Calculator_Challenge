@@ -26,6 +26,14 @@ public class MainCalculatorViewModel extends ViewModel {
      * operatorNumber object to hold current operation
      */
     private OperatorNumber operatorNumber;
+
+    public void setOperatorNumber(OperatorNumber operatorNumber) {
+        this.operatorNumber = operatorNumber;
+    }
+
+    public OperatorNumber getOperatorNumber() {
+        return operatorNumber;
+    }
     /**
      * MutableLivedata of operations list hold every operation performed and observe any change
      * to create recyclerview list
@@ -35,6 +43,14 @@ public class MainCalculatorViewModel extends ViewModel {
      * list of operation for tracking operations and to added to historyListMutableLiveData
      */
     private List<OperatorNumber> historyList = new ArrayList<>();
+
+    public List<OperatorNumber> getHistoryList() {
+        return historyList;
+    }
+
+    public void setHistoryList(List<OperatorNumber> historyList) {
+        this.historyList = historyList;
+    }
     /**
      * For checking EqualButton active state and observe any change to update equal button
      */
@@ -115,15 +131,6 @@ public class MainCalculatorViewModel extends ViewModel {
     }
 
     /**
-     * For encapsulate isEqualButtonActive
-     *
-     * @param active so set isEqualButtonActive
-     */
-    public void setIsEqualButtonActive(Boolean active) {
-        this.isEqualButtonActive.setValue(active);
-    }
-
-    /**
      * For encapsulate isUndoButtonActive
      *
      * @return isUndoButtonActive
@@ -185,11 +192,12 @@ public class MainCalculatorViewModel extends ViewModel {
      * updating addingToDeque to add every list happened to allHistoryOperation and undoListsOperations too
      * and check buttons state to active all operations button
      */
-    public void Calculation() {
+    public void calculation() {
         historyList.add(operatorNumber);
         historyListMutableLiveData.setValue(historyList);
-        equal();
+        equal(historyList);
         addingToDeque();
+        isEqualButtonActive.setValue(false);
         calculatorOperationChecks();
     }
 
@@ -203,7 +211,7 @@ public class MainCalculatorViewModel extends ViewModel {
     public void removeHistoryList(OperatorNumber deletedOperatorNumber) {
         historyList.remove(deletedOperatorNumber);
         historyListMutableLiveData.setValue(historyList);
-        equal();
+        equal(historyList);
         addingToDeque();
     }
 
@@ -254,7 +262,7 @@ public class MainCalculatorViewModel extends ViewModel {
         List<OperatorNumber> lastListOperatorNumbers = allHistoryOperation.getLast();
         historyList = new ArrayList<>(lastListOperatorNumbers);
         historyListMutableLiveData.setValue(historyList);
-        equal();
+        equal(historyList);
         UndoRedoButtonsChecks();
     }
 
@@ -270,16 +278,17 @@ public class MainCalculatorViewModel extends ViewModel {
         List<OperatorNumber> lastListOperatorNumbers = allHistoryOperation.getLast();
         historyList = new ArrayList<>(lastListOperatorNumbers);
         historyListMutableLiveData.setValue(historyList);
-        equal();
+        equal(historyList);
         UndoRedoButtonsChecks();
     }
 
     /**
      * equal every operation in historyList and update final result
+     * @param historyList
      */
-    private void equal() {
+    public void equal(List<OperatorNumber> historyList) {
         float result = 0;
-        for (OperatorNumber operatorNumber1 : Objects.requireNonNull(historyListMutableLiveData.getValue())) {
+        for (OperatorNumber operatorNumber1 : historyList) {
             switch (operatorNumber1.getNumOperator()) {
                 case Add:
                     result = result + operatorNumber1.getNumValue();
@@ -312,6 +321,7 @@ public class MainCalculatorViewModel extends ViewModel {
      */
     private void calculatorOperationChecks() {
         setAllCalculatorOperationListFalse();
+
         switch (operatorNumber.getNumOperator()) {
             case Add:
                 isAddButtonActive.setValue(true);
@@ -331,7 +341,7 @@ public class MainCalculatorViewModel extends ViewModel {
     /**
      * To active all or disable all operations buttons
      */
-    private void setAllCalculatorOperationListFalse() {
+    public void setAllCalculatorOperationListFalse() {
         for (MutableLiveData<Boolean> item : operationButtonsState) {
 
             item.setValue(!item.getValue());

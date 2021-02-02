@@ -70,8 +70,7 @@ public class MainActivity extends AppCompatActivity implements HistoryAdapter.On
         binding.equalButton.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(binding.editTextNumber.getText().toString())) {
                 viewModel.setCurrentInputNum(Float.parseFloat(binding.editTextNumber.getText().toString()));
-                viewModel.setIsEqualButtonActive(false);
-                viewModel.Calculation();
+                viewModel.calculation();
                 binding.editTextNumber.setText("");
             }
         });
